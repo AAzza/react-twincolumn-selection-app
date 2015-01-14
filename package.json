@@ -1,0 +1,24 @@
+{
+  "name": "react-items-selector",
+  "version": "0.2.0",
+  "description": "Select several items from long list of them",
+  "main": "js/app.js",
+  "dependencies": {
+    "react": "~0.12"
+  },
+  "devDependencies": {
+    "browserify": "^6.2.0",
+    "reactify": "^0.15.2"
+  },
+  "scripts": {
+    "build": "browserify js/app.js > js/bundle.js"
+  },
+  "browserify": {
+      "transform": ["reactify"]
+  },
+  "files": ["lib/", "USAGE.txt", "static/"],
+  "staticRoot": "./static/",
+  "staticPlugin": "statics-stylesheets",
+  "author": "Nataliia Uvarova",
+  "license": "Apache 2"
+}
