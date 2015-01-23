@@ -4,20 +4,21 @@ var ItemList = require('./ItemList.react.js');
 
 var SelectorApp = React.createClass({
   render: function() {
+    var items = {'1': {'text': 'tweet-tweet1'}, 2: {'text': 'tweet tweet 2'}};
     return (
     <div className="ink-grid">
       <header className="vertical-space">
-        <h1>Item selector <small>select tweets you consider the most informative</small></h1>
+        <h1>TOPIC: some very important topic</h1>
         <StatusBar />
       </header>
       <div className="column-group gutters">
         <div className="all-50">
-          <h2> Not selected items</h2>
-          <ItemList selected={false}/>
+          <h3> Not selected items</h3>
+          <ItemList key={false} selected={false} items={items}/>
         </div>
         <div className="all-50">
-          <h2> Selected items</h2>
-          <ItemList selected={true}/>
+          <h3> Selected items</h3>
+          <ItemList key={true} selected={true} items={items}/>
         </div>
       </div>
     </div>

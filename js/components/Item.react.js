@@ -12,7 +12,7 @@ var Item = React.createClass({
     }
     return (
       <div className="vertical-space grey">
-        <div>{this.props.item.text}</div>
+        <div className="large">{this.props.item.text}</div>
           <div className="button-group">
             <button className="ink-button">up</button>
             <button className="ink-button">down</button>

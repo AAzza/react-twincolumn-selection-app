@@ -5,9 +5,15 @@ var StatusBar = React.createClass({
     return (
       <nav className="ink-navigation">
         <ul className="menu horizontal grey">
-          <li><a href="#">Instructions</a></li>
-          <li><a href="#">Select another topic</a></li>
-          <li><a href="#">Show hidden messages</a></li>
+          <li className="heading"><a href="#">Instructions</a></li>
+          <li>
+            <a href="#">Select another topic</a>
+              <ul className="submenu">
+                <li className="active"><a href="#">Very important topic</a></li>
+                <li><a href="#">Another topic</a></li>
+                <li><a href="#">Yet another topic</a></li>
+              </ul>
+          </li>
         </ul>
       </nav>
     );
