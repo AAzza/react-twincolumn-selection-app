@@ -1,10 +1,23 @@
 var React = require('react');
 var StatusBar = require('./StatusBar.react');
 var ItemList = require('./ItemList.react.js');
+var ItemStore = require('../stores/ItemStore.js');
+
 
 var SelectorApp = React.createClass({
+  getInitialState: function() {
+    return ItemStore.getItems();
+  },
+  componentDidMount: function() {
+    ItemStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    ItemStore.removeChangeListener(this._onChange);
+  },
+  _onChange: function() {
+    this.setState(ItemStore.getItems());
+  },
   render: function() {
-    var items = {'1': {'text': 'tweet-tweet1'}, 2: {'text': 'tweet tweet 2'}};
     return (
     <div className="ink-grid">
       <header className="vertical-space">
@@ -14,11 +27,11 @@ var SelectorApp = React.createClass({
       <div className="column-group gutters">
         <div className="all-50">
           <h3> Not selected items</h3>
-          <ItemList key={false} selected={false} items={items}/>
+          <ItemList key={false} selected={false} items={this.state.selected}/>
         </div>
         <div className="all-50">
           <h3> Selected items</h3>
-          <ItemList key={true} selected={true} items={items}/>
+          <ItemList key={true} selected={true} items={this.state.notselected}/>
         </div>
       </div>
     </div>
