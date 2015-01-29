@@ -8,7 +8,7 @@ var ItemList = React.createClass({
       rendered = [],
       key;
     for (key in items) {
-      rendered.push(<Item key={key} item={items[key]} selected={this.props.selected} />);
+      rendered.push(<Item key={items[key].id} item={items[key]} selected={this.props.selected} />);
       rendered.push(<hr />);
     }
     return (

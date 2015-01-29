@@ -4,12 +4,14 @@
   "description": "Select several items from long list of them",
   "main": "js/app.js",
   "dependencies": {
-    "react": "~0.12"
+    "react": "~0.12",
+    "flux": "^2.0.1",
+    "keymirror": "~0.1.0",
+    "object-assign": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^6.2.0",
-    "reactify": "^0.15.2",
-    "object-assign": "^1.0.0"
+    "reactify": "^0.15.2"
   },
   "scripts": {
     "build": "browserify js/app.js > js/bundle.js"
