@@ -10,7 +10,7 @@ var items = {
   'notselected':  [{id: 3, text: 'tweet-tweet1'}, {id: 4, text: 'tweet tweet 2'}]
 };
 
-function move(id, from, to) {
+function move_between_lists(id, from, to) {
   var i, item;
   for (i = 0; i < from.length; i++) {
     item = from[i];
@@ -22,12 +22,29 @@ function move(id, from, to) {
   }
 }
 
+function move(id, list, direction) {
+  var direction_step =  (direction === Constants.DIRECTION_DOWN) ? 1 : -1;
+  var i, item;
+  for (i = 0; i < list.length; i++) {
+    item = list[i];
+    if (item.id === id) {
+      if ((direction === Constants.DIRECTION_DOWN && i === list.length) ||
+           (direction === Constants.DIRECTION_UP && i === 0)) {
+        return;
+      }
+      list.splice(i, 1); // remove from old position
+      list.splice(i + direction_step, 0, item); // insert into new position
+      return;
+    }
+  }
+}
+
 function select(id) {
-  move(id, items.notselected, items.selected);
+  move_between_lists(id, items.notselected, items.selected);
 }
 
 function unselect(id) {
-  move(id, items.selected, items.notselected);
+  move_between_lists(id, items.selected, items.notselected);
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
@@ -54,6 +71,12 @@ Dispatcher.register(function(action) {
 
     case Constants.ITEM_UNSELECT:
       unselect(action.id);
+      ItemStore.emitChange();
+      break;
+
+    case Constants.ITEM_MOVE:
+      move(action.id, items.selected, action.direction);
+      move(action.id, items.notselected, action.direction);
       ItemStore.emitChange();
       break;
 
