@@ -1,8 +1,8 @@
 var React = require('react');
+var Router = require('react-router');
 
-var SelectorApp = require('./components/SelectorApp.react');
+var AppRoutes = require('./components/SelectorApp.react');
 
-React.render(
-    <SelectorApp />,
-    document.getElementById('items')
-);
+Router.run(AppRoutes, function (Handler) {
+  React.render(<Handler />, document.getElementById('items'));
+});

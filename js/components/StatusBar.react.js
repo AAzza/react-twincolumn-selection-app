@@ -1,17 +1,19 @@
 var React = require('react');
+var Router = require('react-router');
+var Link=Router.Link;
 
 var StatusBar = React.createClass({
   render: function() {
     return (
       <nav className="ink-navigation">
         <ul className="menu horizontal grey">
-          <li className="heading"><a href="#">Instructions</a></li>
+          <li className="heading"><Link to="instructions">Instructions</Link></li>
           <li>
-            <a href="#">Select another topic</a>
+            <a>Select another topic</a>
               <ul className="submenu">
-                <li className="active"><a href="#">Very important topic</a></li>
-                <li><a href="#">Another topic</a></li>
-                <li><a href="#">Yet another topic</a></li>
+                <li><Link to="topic">Very important topic</Link></li>
+                <li><Link to="topic">Another topic</Link></li>
+                <li><Link to="topic">Yet another topic</Link></li>
               </ul>
           </li>
         </ul>
