@@ -1,5 +1,4 @@
 var React = require('react');
-var StatusBar = require('./StatusBar.react');
 var TwinColumn = require('./TwinColumn.react');
 var Instructions = require('./Instructions.react');
 
@@ -11,13 +10,7 @@ var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
 var SelectorApp = React.createClass({
   render: function() {
     return (
-    <div className="ink-grid">
-      <header className="vertical-space">
-        <h1>TOPIC: some very important topic</h1>
-        <StatusBar />
-      </header>
       <RouteHandler />
-    </div>
     );
   }
 });
