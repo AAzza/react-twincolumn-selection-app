@@ -9,7 +9,6 @@ var Instructions = React.createClass({
         <hr />
         <div className="column-group gutters">
           <div className="all-100 center">
-
             <p>
               I am Nataliia Uvarova, Master student at Gjovik University
               College, writing Master thesis in the field of Information

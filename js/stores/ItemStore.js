@@ -5,10 +5,22 @@ var Constants = require('../constants');
 
 var CHANGE_EVENT = 'change';
 
-var items = {
-  'selected': [{id: 1, text: 'tweet-tweet1'}, {id: 2, text: 'tweet tweet 2'}],
-  'notselected':  [{id: 3, text: 'tweet-tweet1'}, {id: 4, text: 'tweet tweet 2'}]
+var state = {
+  session_info: null,
+  items: {
+    selected: [],
+    notselected: []
+  },
+  current: {
+    topic: "",
+    topic_id: null,
+  }
 };
+
+function init(info) {
+  state.session_info = info;
+  state.items = {selected: [], notselected: []};
+}
 
 function move_between_lists(id, from, to) {
   var i, item;
@@ -40,16 +52,26 @@ function move(id, list, direction) {
 }
 
 function select(id) {
-  move_between_lists(id, items.notselected, items.selected);
+  move_between_lists(id, state.items.notselected, state.items.selected);
 }
 
 function unselect(id) {
-  move_between_lists(id, items.selected, items.notselected);
+  move_between_lists(id, state.items.selected, state.items.notselected);
+}
+
+function load_data(items, topic_id, topic_name) {
+  state.items.notselected = items;
+  state.items.selected = [];
+  state.current.topic = topic_name;
+  state.current.topic_id = topic_id;
 }
 
 var ItemStore = assign({}, EventEmitter.prototype, {
   getItems: function() {
-    return items;
+    return state.items;
+  },
+  getTopic: function() {
+    return state.current.topic;
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -75,9 +97,18 @@ Dispatcher.register(function(action) {
       break;
 
     case Constants.ITEM_MOVE:
-      move(action.id, items.selected, action.direction);
-      move(action.id, items.notselected, action.direction);
+      move(action.id, state.items.selected, action.direction);
+      move(action.id, state.items.notselected, action.direction);
       ItemStore.emitChange();
+      break;
+
+    case Constants.TOPIC_LOAD:
+      load_data(action.items);
+      ItemStore.emitChange();
+      break;
+
+    case Constants.APP_INIT:
+      init(action.session_info);
       break;
 
     default:

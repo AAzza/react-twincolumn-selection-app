@@ -17,8 +17,8 @@ func main() {
 	// EnableRelaxedContentType: true,
 	}
 	err := handler.SetRoutes(
-        &rest.Route{"GET", "/api/:session/", api.GetSession},
-        &rest.Route{"GET", "/api/:session/topic/:topic", api.GetTopic},
+        &rest.Route{"GET", "/api/:session", api.GetSession},
+        &rest.Route{"GET", "/api/topic/:topic", api.GetTopic},
         &rest.Route{"POST", "/api/:session/topic/:topic", api.SetSummary},
 	)
 	if err != nil {
