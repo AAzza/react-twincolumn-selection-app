@@ -32,10 +32,12 @@ var Instructions = React.createClass({
 green button on the top right corner. You will be redirected to the page with
 the first topic.</li>
 
-              <li>On the top of the page you will see the topic name. The presented tweets
-and the produced summary will be about this topic. The topics could be very
-specific -- about event like Oscar nominations or more broader --- like human
-reactions about particular product in some period of time. </li>
+              <li>On the top of the page you will see the topic name. The
+              presented tweets and the produced summary will be about this
+              topic.There are different types of topics. The topic can be
+              specific -- for instance about event like Oscar nominations or be
+              broad --- like opinions about fast-food chains in February 2011.
+              </li>
 
              <li>You will see the list of tweets on the left --- it is a list of all
 available tweets about particular event. Empty list on the right --- it is
@@ -45,8 +47,13 @@ where you should produce your summary.</li>
 buttons on the desired tweets.</li>
 
   <li>Some of the tweets are very similar to each other, some are not very
-    relevant, your task is to select 5 of them which you believe represent the
-    topic the best.</li>
+  relevant, your task is to select group of them which together form a summary
+  of all content. There is no right or wrong answers --- select tweets that you
+  believe represent the topic the best.</li>
+
+  <li>The length of the summary should be around 5 to 10 tweets. Please try not
+  to make it too short or to long, except if you really fill that you cannot
+  add/delete tweets.</li>
 
   <li>Please organize the tweets in the summary in order of increasing
     importantness --- the first tweet represent the essence of the topic best,
@@ -58,7 +65,7 @@ buttons on the desired tweets.</li>
     should not be in the summary to the bottom or alternatively group tweets by
     similarity. It is really up to you.</li>
 
-  <li>You can press "Read instructions" button at any time, don't worry, your
+  <li>You can press "Read instructions" button at any time, dont worry, your
   progress will be saved.</li>
 
   <li>When you are satisfied with the summary, press the "Submit and next"
