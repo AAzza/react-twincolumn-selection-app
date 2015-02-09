@@ -10,18 +10,21 @@ var StatusBar = React.createClass({
   render: function() {
     var links = [];
     var header;
-    if(this.props.page == 'instructions') {
+    var page = this.props.page;
+    if(page == 'instructions') {
       links.push(<button className="ink-button push-right green"
                          onClick={this._to_the_topic}>
                    To the topic </button>);
       header = <h1>Instructions</h1>;
-    } else {
+    } else if (page == 'topic') {
       links.push(<Link className="ink-button" to="instructions"
                        params={{session: ItemStore.getSessionId()}}>
                   Read instructions</Link>);
       links.push(<button className="ink-button push-right green"
                          onClick={this._submit}>Submit and continue</button>);
       header = <h1>TOPIC: {ItemStore.getTopic()}</h1>;
+    } else {
+      header = <h1>Thank you!</h1>
     }
     return (
       <header className="vertical-space">
@@ -38,7 +41,7 @@ var StatusBar = React.createClass({
         Actions.loadNextTopic();
         this.transitionTo('topic', {'session': ItemStore.getSessionId()});
     } else {
-      // TODO: go to final page
+        this.transitionTo('final_page', {'session': ItemStore.getSessionId()});
     }
   },
 
