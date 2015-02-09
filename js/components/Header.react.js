@@ -16,7 +16,9 @@ var StatusBar = React.createClass({
                    To the topic </button>);
       header = <h1>Instructions</h1>;
     } else {
-      links.push(<Link className="ink-button" to="instructions">Read instructions</Link>);
+      links.push(<Link className="ink-button" to="instructions"
+                       params={{session: ItemStore.getSessionId()}}>
+                  Read instructions</Link>);
       links.push(<button className="ink-button push-right green"
                          onClick={this._submit}>Submit and continue</button>);
       header = <h1>TOPIC: {ItemStore.getTopic()}</h1>;
@@ -34,7 +36,7 @@ var StatusBar = React.createClass({
   _to_the_topic: function() {
     if (!ItemStore.isLoaded() && ItemStore.getAllTopics().length > 0) {
         Actions.loadNextTopic();
-        this.transitionTo('topic');
+        this.transitionTo('topic', {'session': ItemStore.getSessionId()});
     } else {
       // TODO: go to final page
     }

@@ -9,9 +9,9 @@ var Route = Router.Route, DefaultRoute = Router.DefaultRoute,
 
 
 var SelectorApp = React.createClass({
+  mixins: [Router.State],
   componentDidMount: function () {
-    // hard-code session_id for now
-    Actions.init("e07ccdfa-d523-467b-8ecb-d9f4afd6b056");
+    Actions.init(this.getParams().session);
   },
   render: function() {
     return (
@@ -21,7 +21,7 @@ var SelectorApp = React.createClass({
 });
 
 var Routes = (
-  <Route name="app" path="/" handler={SelectorApp}>
+  <Route name="app" path="/summary_generation/:session" handler={SelectorApp}>
     <Route name="instructions" handler={Instructions}/>
     <Route name="topic" handler={TwinColumn}/>
     <DefaultRoute handler={Instructions}/>
