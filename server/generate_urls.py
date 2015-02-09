@@ -7,7 +7,7 @@ import random
 import pymongo
 
 
-base_url = "http://localhost/"
+base_url = "/summary_generation/"
 summaries_per_topic = 3
 
 
@@ -38,7 +38,7 @@ def generate_urls(topics_per_person):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print("You should provide how many topics per person there could be")
         sys.exit(1)
     topics_per_person = int(sys.argv[1])

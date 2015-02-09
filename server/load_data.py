@@ -1,6 +1,7 @@
 import json
 import pymongo
 import csv
+import re
 
 input_folder = '/home/nata/Study/hig/master/data/raw/sentiment/'
 
@@ -30,8 +31,23 @@ def format_tweet(tweet):
 def load_tweets(t_id):
     with open(input_folder + '{}.json'.format(t_id)) as f:
         tweets = json.load(f)
-        return [format_tweet(t) for t in tweets['data']]
+        return clean_tweets([format_tweet(t) for t in tweets['data']])
 
+
+def clean_tweets(tweets):
+    # remove urls first
+    url_re = re.compile(r"https?:\/\/[^\s]+", re.IGNORECASE)
+    cleaned = []
+    for tw in tweets:
+        text = url_re.sub('', tw['text'])
+        if text.strip():
+            cleaned.append(dict(tw, text=text))
+
+    if len(cleaned) < 70:
+        return cleaned
+
+    return [tweet for tweet in cleaned if not tweet['text'].startswith('@')]
+    # remove tweets that starts from @
 
 def load_everything(topic_ids):
     t_names = load_names()
