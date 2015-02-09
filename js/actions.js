@@ -1,17 +1,48 @@
 var Dispatcher = require('./dispatcher');
 var Constants = require('./constants');
+var ItemStore = require('./stores/ItemStore');
 var $ = require('jquery-browserify');
 
 var Actions = {
   loadFromServer: function(id) {
     $.ajax({
-      url: 'http://localhost/api/topic/' + id,
+      url: '/api/topic/' + id,
       dataType: 'json',
       success: function(data) {
         Dispatcher.dispatch({
           actionType: Constants.TOPIC_LOAD,
-          items: data.tweets
+          items: data.tweets,
+          topic: data.topic,
+          topic_id: data.topic_id
         });
+      },
+      error: function(xhr, status, err) {
+        console.error(status, err.toString());
+      }
+    });
+  },
+
+  loadNextTopic: function() {
+    this.loadFromServer(ItemStore.getAllTopics()[0]);
+  },
+
+  submit: function() {
+    var data = {
+      session_id: ItemStore.getSessionId(),
+      topic: ItemStore.getTopic(),
+      tweets: ItemStore.getItems()['selected'],
+      topic_id: ItemStore.getTopicId()
+    };
+    Dispatcher.dispatch({
+      actionType: Constants.TOPIC_SUBMIT
+    });
+    $.ajax({
+      type: 'POST',
+      url: '/api/summary',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function(data) {
       },
       error: function(xhr, status, err) {
         console.error(status, err.toString());
@@ -21,7 +52,7 @@ var Actions = {
 
   init: function(session) {
     $.ajax({
-      url: 'http://localhost/api/' + session,
+      url: '/api/' + session,
         dataType: 'json',
         success: function(data) {
           Dispatcher.dispatch({

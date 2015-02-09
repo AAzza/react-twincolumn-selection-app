@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/ant0ine/go-json-rest/rest"
-	"log"
+    "github.com/ant0ine/go-json-rest/rest"
+    "log"
     "strconv"
-	"net/http"
+    "net/http"
     "gopkg.in/mgo.v2"
     "gopkg.in/mgo.v2/bson"
 )
@@ -13,18 +13,16 @@ func main() {
     api := Api{}
     api.InitDB()
 
-	handler := rest.ResourceHandler{
-	// EnableRelaxedContentType: true,
-	}
-	err := handler.SetRoutes(
+    handler := rest.ResourceHandler{}
+    err := handler.SetRoutes(
         &rest.Route{"GET", "/api/:session", api.GetSession},
         &rest.Route{"GET", "/api/topic/:topic", api.GetTopic},
-        &rest.Route{"POST", "/api/:session/topic/:topic", api.SetSummary},
-	)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Fatal(http.ListenAndServe(":8080", &handler))
+        &rest.Route{"POST", "/api/summary", api.SetSummary},
+    )
+    if err != nil {
+        log.Fatal(err)
+    }
+    log.Fatal(http.ListenAndServe(":8080", &handler))
 }
 
 type Tweet struct {
@@ -33,15 +31,15 @@ type Tweet struct {
 }
 
 type TweetList struct {
-    TopicId     int `json:"topic_id" bson:"t_id"`
-    Topic   string `json:"topic" bson:"t_name"`
+    TopicId int `json:"topic_id" bson:"t_id"`
+    Topic string `json:"topic" bson:"t_name"`
     Tweets []*Tweet `json:"tweets"`
 }
 
 type Summary struct {
-    TopicId     int `json:"topic_id" bson:"t_id"`
+    TopicId int `json:"topic_id" bson:"t_id"`
     SessionId string `json:"session_id" bson:"s_id"`
-    Topic   string `json:"topic" bson:"t_name"`
+    Topic string `json:"topic" bson:"t_name"`
     Tweets []*Tweet `json:"tweets"`
 }
 
@@ -64,13 +62,14 @@ func (api *Api) InitDB() {
 
 func (api *Api) GetSession(writer rest.ResponseWriter, req *rest.Request) {
     session := req.PathParam("session")
+    //TODO: filter already submitted sessions
     var result Session
     api.DB.C("sessions").Find(bson.M{"s_id": session}).One(&result)
     writer.WriteJson(result)
 }
 
 func (api *Api) GetTopic(writer rest.ResponseWriter, req *rest.Request) {
-	id, err := strconv.Atoi(req.PathParam("topic"))
+    id, err := strconv.Atoi(req.PathParam("topic"))
     if err != nil {
         rest.NotFound(writer, req)
         return
@@ -85,21 +84,13 @@ func (api *Api) GetTopic(writer rest.ResponseWriter, req *rest.Request) {
 }
 
 func (api *Api) SetSummary(writer rest.ResponseWriter, req *rest.Request) {
-    session_id := req.PathParam("session")
-    topic_id, err := strconv.Atoi(req.PathParam("topic"))
-    if err != nil {
-        rest.NotFound(writer, req)
-        return
-    }
     var summary Summary
     if err := req.DecodeJsonPayload(&summary); err != nil {
         rest.NotFound(writer, req)
         return
     }
     // TODO: check if the topic belongs to the session
-    summary.SessionId = session_id
-    summary.TopicId = topic_id
-    err = api.DB.C("summaries").Insert(summary)
+    err := api.DB.C("summaries").Insert(summary)
     if err != nil {
         log.Fatal(err)
     }

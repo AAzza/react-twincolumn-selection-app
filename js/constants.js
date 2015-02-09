@@ -6,6 +6,7 @@ module.exports = keyMirror({
   ITEM_UNSELECT: null,
   ITEM_MOVE: null,
   TOPIC_LOAD: null,
+  TOPIC_SUBMIT: null,
   DIRECTION_UP: null,
   DIRECTION_DOWN: null,
 });
