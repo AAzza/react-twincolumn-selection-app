@@ -4,22 +4,21 @@ var Constants = require('../constants');
 
 var Item = React.createClass({
   render: function(){
-    var actionButton, hideButton;
+    var buttons = [];
 
     if(this.props.selected) {
-      actionButton = <button className="ink-button" onClick={this._onUnselectClick}>unselect</button>;
+      buttons.push(<button className="ink-button" onClick={this._onUnselectClick}>unselect</button>);
+      buttons.push(<button className="ink-button" onClick={this._onClickUp}>up</button>);
+      buttons.push(<button className="ink-button" onClick={this._onClickDown}>down</button>);
     } else {
-      actionButton = <button className="ink-button" onClick={this._onSelectClick}>select</button>;
-      hideButton = <button className="ink-button">hide</button>;
+      buttons.push(<button className="ink-button" onClick={this._onSelectClick}>select</button>);
+      buttons.push(<button className="ink-button">hide</button>);
     }
     return (
       <div className="vertical-space grey">
         <div className="large">{this.props.item.text}</div>
           <div className="button-group">
-            <button className="ink-button" onClick={this._onClickUp}>up</button>
-            <button className="ink-button" onClick={this._onClickDown}>down</button>
-            {actionButton}
-            {hideButton}
+            {buttons}
           </div>
       </div>
     )
