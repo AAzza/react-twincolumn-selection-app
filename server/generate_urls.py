@@ -38,7 +38,7 @@ def generate_urls(topics_per_person):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         print("You should provide how many topics per person there could be")
         sys.exit(1)
     topics_per_person = int(sys.argv[1])

@@ -32,7 +32,7 @@ function load_topic(topic_id, topic_name, items) {
   state.items.selected = [];
   state.current.topic = topic_name;
   state.current.topic_id = topic_id;
-  state.loaded = true;
+  state.current.loaded = true;
 }
 
 function submit_current_topic() {

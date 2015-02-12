@@ -37,17 +37,20 @@ var StatusBar = React.createClass({
   },
 
   _to_the_topic: function() {
-    if (!ItemStore.isLoaded() && ItemStore.getAllTopics().length > 0) {
+    if (!ItemStore.isLoaded()) {
+        Actions.loadNextTopic();
+    }
+    this.transitionTo('topic', {'session': ItemStore.getSessionId()});
+  },
+
+  _submit: function() {
+    Actions.submit();
+    if (ItemStore.getAllTopics().length > 0) {
         Actions.loadNextTopic();
         this.transitionTo('topic', {'session': ItemStore.getSessionId()});
     } else {
         this.transitionTo('final_page', {'session': ItemStore.getSessionId()});
     }
-  },
-
-  _submit: function() {
-    Actions.submit();
-    this._to_the_topic();
   }
 });
 
