@@ -20,6 +20,10 @@ var StatusBar = React.createClass({
       links.push(<Link className="ink-button" to="instructions"
                        params={{session: ItemStore.getSessionId()}}>
                   Read instructions</Link>);
+      links.push(<button className="ink-button"
+        onClick={this._toggleShowHidden}>
+        {ItemStore.showHidden() ? "Hide hidden items" : "Show hidden items"}
+        </button>);
       links.push(<button className="ink-button push-right green"
                          onClick={this._submit}>Submit and continue</button>);
       header = <h1>TOPIC: {ItemStore.getTopic()}</h1>;
@@ -51,6 +55,10 @@ var StatusBar = React.createClass({
     } else {
         this.transitionTo('final_page', {'session': ItemStore.getSessionId()});
     }
+  },
+
+  _toggleShowHidden: function() {
+    Actions.toggleShowHidden();
   }
 });
 

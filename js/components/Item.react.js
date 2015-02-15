@@ -10,9 +10,11 @@ var Item = React.createClass({
       buttons.push(<button className="ink-button" onClick={this._onUnselectClick}>unselect</button>);
       buttons.push(<button className="ink-button" onClick={this._onClickUp}>up</button>);
       buttons.push(<button className="ink-button" onClick={this._onClickDown}>down</button>);
+    } else if (this.props.hidden) {
+      buttons.push(<button className="ink-button" onClick={this._onClickUnHide}>unhide</button>);
     } else {
       buttons.push(<button className="ink-button" onClick={this._onSelectClick}>select</button>);
-      buttons.push(<button className="ink-button">hide</button>);
+      buttons.push(<button className="ink-button" onClick={this._onClickHide}>hide</button>);
     }
     return (
       <div className="vertical-space grey">
@@ -38,6 +40,14 @@ var Item = React.createClass({
 
   _onClickDown: function() {
     Actions.move(this.props.item.id, Constants.DIRECTION_DOWN);
+  },
+
+  _onClickHide: function() {
+    Actions.hide(this.props.item.id);
+  },
+
+  _onClickUnHide: function() {
+    Actions.unhide(this.props.item.id);
   }
 });
 

@@ -86,6 +86,26 @@ var Actions = {
       id: id,
       direction: direction
     });
+  },
+
+  hide: function(id) {
+    Dispatcher.dispatch({
+      actionType: Constants.ITEM_HIDE,
+      id: id
+    });
+  },
+
+  unhide: function(id) {
+    Dispatcher.dispatch({
+      actionType: Constants.ITEM_UNHIDE,
+      id: id
+    });
+  },
+
+  toggleShowHidden: function() {
+    Dispatcher.dispatch({
+      actionType: Constants.TOGGLE_SHOW_HIDDEN
+    });
   }
 };
 

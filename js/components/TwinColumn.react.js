@@ -25,11 +25,11 @@ var TwinColumn = React.createClass({
         <div className="column-group gutters">
           <div className="all-50">
             <h3> Not selected items</h3>
-            <ItemList key={false} selected={false} items={this.state.notselected}/>
+            <ItemList key={false} selected={false} show_hidden={ItemStore.showHidden()} items={this.state.notselected}/>
           </div>
           <div className="all-50">
             <h3> Selected items</h3>
-            <ItemList key={true} selected={true} items={this.state.selected}/>
+            <ItemList key={true} selected={true} show_hidden={false} items={this.state.selected}/>
           </div>
         </div>
       </div>

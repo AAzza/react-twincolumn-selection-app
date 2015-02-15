@@ -18,6 +18,7 @@ var state = {
     topic: "",
     topic_id: null,
     loaded: false,
+    show_hidden: false,
   },
 };
 
@@ -82,6 +83,21 @@ function move_up_down(id, list, direction) {
   }
 }
 
+function set_hide(id, hide_status) {
+  var i, item;
+  for (i = 0; i < state.items.notselected.length; i++) {
+    item = state.items.notselected[i];
+    if (item.id === id) {
+      item.hidden = hide_status;
+      return;
+    }
+  }
+}
+
+function toggle_show_hidden() {
+  state.current.show_hidden = !state.current.show_hidden;
+}
+
 var ItemStore = assign({}, EventEmitter.prototype, {
   getItems: function() {
     return state.items;
@@ -100,6 +116,9 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   },
   getTopicId: function() {
     return state.current.topic_id;
+  },
+  showHidden: function() {
+    return state.current.show_hidden;
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -139,6 +158,21 @@ Dispatcher.register(function(action) {
     case Constants.ITEM_MOVE:
       move_up_down(action.id, state.items.selected, action.direction);
       move_up_down(action.id, state.items.notselected, action.direction);
+      ItemStore.emitChange();
+      break;
+
+    case Constants.ITEM_HIDE:
+      set_hide(action.id, true);
+      ItemStore.emitChange();
+      break;
+
+    case Constants.ITEM_UNHIDE:
+      set_hide(action.id, false);
+      ItemStore.emitChange();
+      break;
+
+    case Constants.TOGGLE_SHOW_HIDDEN:
+      toggle_show_hidden();
       ItemStore.emitChange();
       break;
 
