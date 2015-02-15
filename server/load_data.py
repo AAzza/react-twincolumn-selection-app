@@ -6,19 +6,19 @@ import re
 input_folder = '/home/nata/Study/hig/master/data/raw/sentiment/'
 
 
-def save_to_mongo(t_id, t_name, tweets):
+def save_to_mongo(t_id, t_info, tweets):
     db = pymongo.MongoClient().tweets
-    to_save = {'t_id': t_id, 't_name': t_name, 'tweets': tweets}
+    to_save = {'t_id': t_id, 't_name': t_info['name'], 'tweets': tweets, 'desc': t_info['desc']}
     db.topics.insert(to_save)
 
 
-def load_names():
-    names = {}
+def load_base_info():
+    info = {}
     with open('/home/nata/Study/hig/master/data/input/topics.txt') as f:
         reader = csv.reader(f, delimiter=' ')
         for row in reader:
-            names[int(row[0])] = row[1]
-    return names
+            info[int(row[0])] = {'name': row[1], 'desc': row[2]}
+    return info
 
 
 def format_tweet(tweet):
@@ -50,11 +50,10 @@ def clean_tweets(tweets):
     # remove tweets that starts from @
 
 def load_everything(topic_ids):
-    t_names = load_names()
-    print(t_names)
+    t_info = load_base_info()
     for t_id in topic_ids:
         tweets = load_tweets(t_id)
-        save_to_mongo(t_id, t_names[t_id], tweets)
+        save_to_mongo(t_id, t_info[t_id], tweets)
 
 if __name__ == '__main__':
     load_everything([14,29,79,36,24,17,88,99,101,78])

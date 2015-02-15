@@ -33,6 +33,7 @@ type Tweet struct {
 type TweetList struct {
     TopicId int `json:"topic_id" bson:"t_id"`
     Topic string `json:"topic" bson:"t_name"`
+    Desc string `json:"desc" bson:"desc"`
     Tweets []*Tweet `json:"tweets"`
 }
 

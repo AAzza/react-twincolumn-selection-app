@@ -28,12 +28,13 @@ function init(info) {
   state.items = {selected: [], notselected: []};
 }
 
-function load_topic(topic_id, topic_name, items) {
+function load_topic(topic_id, topic_name, desc, items) {
   state.items.notselected = items;
   state.items.selected = [];
   state.current.topic = topic_name;
   state.current.topic_id = topic_id;
   state.current.loaded = true;
+  state.current.desc = desc;
 }
 
 function submit_current_topic() {
@@ -105,6 +106,9 @@ var ItemStore = assign({}, EventEmitter.prototype, {
   getTopic: function() {
     return state.current.topic;
   },
+  getDescription: function() {
+    return state.current.desc;
+  },
   isLoaded: function() {
     return state.current.loaded;
   },
@@ -138,7 +142,7 @@ Dispatcher.register(function(action) {
       break;
 
     case Constants.TOPIC_LOAD:
-      load_topic(action.topic_id, action.topic, action.items);
+      load_topic(action.topic_id, action.topic, action.desc, action.items);
       ItemStore.emitChange();
       break;
 

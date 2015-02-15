@@ -12,6 +12,7 @@ var Actions = {
         Dispatcher.dispatch({
           actionType: Constants.TOPIC_LOAD,
           items: data.tweets,
+          desc: data.desc,
           topic: data.topic,
           topic_id: data.topic_id
         });

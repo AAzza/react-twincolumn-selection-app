@@ -10,6 +10,7 @@ var StatusBar = React.createClass({
   render: function() {
     var links = [];
     var header;
+    var desc;
     var page = this.props.page;
     if(page == 'instructions') {
       links.push(<button className="ink-button push-right green"
@@ -27,12 +28,14 @@ var StatusBar = React.createClass({
       links.push(<button className="ink-button push-right green"
                          onClick={this._submit}>Submit and continue</button>);
       header = <h1>TOPIC: {ItemStore.getTopic()}</h1>;
+      desc = <h3><em>{ItemStore.getDescription()}</em></h3>
     } else {
       header = <h1>Thank you!</h1>
     }
     return (
       <header className="vertical-space">
         {header}
+        {desc}
         <nav className="ink-navigation">
           {links}
         </nav>
