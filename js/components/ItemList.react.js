@@ -21,7 +21,7 @@ var ItemList = React.createClass({
     }
     return (
       <div>{rendered}</div>
-    )
+    );
   }});
 
 module.exports = ItemList;

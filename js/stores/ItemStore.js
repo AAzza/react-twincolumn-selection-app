@@ -44,7 +44,7 @@ function submit_current_topic() {
     topic: "",
     topic_id: null,
     loaded: false,
-  }
+  };
 }
 
 function _move_between_lists(id, from, to) {
@@ -148,6 +148,7 @@ Dispatcher.register(function(action) {
 
     case Constants.TOPIC_SUBMIT:
       submit_current_topic();
+      break;
 
     case Constants.ITEM_SELECT:
       select(action.id);

@@ -31,7 +31,7 @@ var Actions = {
     var data = {
       session_id: ItemStore.getSessionId(),
       topic: ItemStore.getTopic(),
-      tweets: ItemStore.getItems()['selected'],
+      tweets: ItemStore.getItems().selected,
       topic_id: ItemStore.getTopicId()
     };
     Dispatcher.dispatch({

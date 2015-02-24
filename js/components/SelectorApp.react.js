@@ -28,6 +28,6 @@ var Routes = (
     <Route name="final_page" handler={FinalPage}/>
     <DefaultRoute handler={Instructions}/>
   </Route>
-)
+);
 
 module.exports = Routes;

@@ -23,7 +23,7 @@ var Item = React.createClass({
             {buttons}
           </div>
       </div>
-    )
+    );
   },
 
   _onSelectClick: function() {
