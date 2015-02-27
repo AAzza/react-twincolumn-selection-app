@@ -8,18 +8,14 @@ var Actions = {
     $.ajax({
       url: '/api/topic/' + id,
       dataType: 'json',
-      success: function(data) {
-        Dispatcher.dispatch({
-          actionType: Constants.TOPIC_LOAD,
-          items: data.tweets,
-          desc: data.desc,
-          topic: data.topic,
-          topic_id: data.topic_id
-        });
-      },
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }
+    }).then(function(data) {
+      Dispatcher.dispatch({
+        actionType: Constants.TOPIC_LOAD,
+        items: data.tweets,
+        desc: data.desc,
+        topic: data.topic,
+        topic_id: data.topic_id
+      });
     });
   },
 
@@ -43,28 +39,19 @@ var Actions = {
       data: JSON.stringify(data),
       dataType: 'json',
       contentType: 'application/json',
-      success: function(data) {
-      },
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }
     });
   },
 
   init: function(session) {
     $.ajax({
       url: '/api/' + session,
-        dataType: 'json',
-        success: function(data) {
-          Dispatcher.dispatch({
-            actionType: Constants.APP_INIT,
-            session_info: data,
-          });
-        },
-        error: function(xhr, status, err) {
-          console.error(status, err.toString());
-        }
+      dataType: 'json'
+    }).then(function(data) {
+      Dispatcher.dispatch({
+        actionType: Constants.APP_INIT,
+        session_info: data,
       });
+    });
   },
 
   select: function(id) {
